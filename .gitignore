@@ -53,3 +53,13 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# outputs
+# Colleen
+# Grace
+# Sully
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
