@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/08/25 13:32:38 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/16 13:53:08 by xmatute-         ###   ########.fr        #
+#    Created: 2025/09/16 13:51:28 by xmatute-          #+#    #+#              #
+#    Updated: 2025/09/16 13:53:05 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ define ASCIIART
 endef
 export ASCIIART
 
-NAME := Colleen
+NAME := Grace_kid.py
 
-SRC :=	Colleen.py	\
+SRC :=	Grace.py
 
 PYTHON := python3
 
@@ -29,16 +29,14 @@ CYAN = \033[0;36m
 GREEN = \033[0;32m
 MAGENTA = \033[0;35m
 
-all : run $(NAME)
+all : $(NAME)
 
 run : $(SRC)
 	@echo "$(CYAN)Running $(NAME)...$(WHITE)"
 	$(PYTHON) $(SRC)
 	@echo "$(GREEN)$(NAME) executed...$(WHITE)"
 
-$(NAME): $(SRC)
-	@echo "$(CYAN)Quining $(NAME)...$(WHITE)"
-	$(PYTHON) $(SRC) > $(NAME)
+$(NAME): run
 	@echo "$(GREEN)$(NAME) quined...$(WHITE)"
 	
 clean : 
