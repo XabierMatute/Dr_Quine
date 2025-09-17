@@ -6,7 +6,7 @@
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/17 13:07:22 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/17 13:30:30 by xmatute-         ###   ########.fr        #
+#    Updated: 2025/09/17 13:40:09 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CYAN = \033[0;36m
 GREEN = \033[0;32m
 MAGENTA = \033[0;35m
 
-all : run
+all : $(NAME)
 
 run : $(NAME)
 	@echo "$(CYAN)Running $(NAME)...$(WHITE)"
