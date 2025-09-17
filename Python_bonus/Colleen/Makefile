@@ -6,7 +6,7 @@
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/25 13:32:38 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/16 13:53:08 by xmatute-         ###   ########.fr        #
+#    Updated: 2025/09/17 13:32:16 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ define ASCIIART
 endef
 export ASCIIART
 
-NAME := Colleen
+NAME := Colleen.py
+
+OUTPUT := output
 
 SRC :=	Colleen.py	\
 
@@ -29,31 +31,33 @@ CYAN = \033[0;36m
 GREEN = \033[0;32m
 MAGENTA = \033[0;35m
 
-all : run $(NAME)
+all : run
 
 run : $(SRC)
 	@echo "$(CYAN)Running $(NAME)...$(WHITE)"
 	$(PYTHON) $(SRC)
 	@echo "$(GREEN)$(NAME) executed...$(WHITE)"
 
-$(NAME): $(SRC)
-	@echo "$(CYAN)Quining $(NAME)...$(WHITE)"
-	$(PYTHON) $(SRC) > $(NAME)
-	@echo "$(GREEN)$(NAME) quined...$(WHITE)"
+$(NAME):
+	@echo "$(ASCIIART)"
+
+$(OUTPUT): $(SRC)
+	$(PYTHON) $(SRC) > $(OUTPUT)
+	@echo "$(GREEN)$(OUTPUT) created...$(WHITE)"
 	
 clean : 
-	$(RM) $(NAME)
+	$(RM) $(OUTPUT)
 	@echo "$(RED)clean done...$(WHITE)"
 
 fclean : clean
-	$(RM) $(NAME)
+	$(RM) 
 	@echo "$(RED)fclean done...$(WHITE)"
 
 re : fclean all
 
-test: all
+test: $(SRC) $(OUTPUT)
 	@echo "$(CYAN)Testing $(NAME)...$(WHITE)"
-	diff $(SRC) $(NAME)
+	diff $(SRC) $(OUTPUT)
 
 commit:
 	git add $(SRC) Makefile

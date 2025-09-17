@@ -12,7 +12,7 @@ if i >= 0:
     with open(filename, "w") as f:
         f.write(source % (x, source))
     
-    if x >= 0:
+    if x > 0:
         # Make executable
         os.chmod(filename, 0o755)
         # Run the new program

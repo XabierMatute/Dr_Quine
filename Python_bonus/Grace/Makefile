@@ -6,7 +6,7 @@
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/16 13:51:28 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/16 13:53:05 by xmatute-         ###   ########.fr        #
+#    Updated: 2025/09/17 13:34:59 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,11 @@ define ASCIIART
 endef
 export ASCIIART
 
-NAME := Grace_kid.py
+NAME := Grace.py
 
 SRC :=	Grace.py
+
+KID := Grace_kid.py
 
 PYTHON := python3
 
@@ -36,22 +38,24 @@ run : $(SRC)
 	$(PYTHON) $(SRC)
 	@echo "$(GREEN)$(NAME) executed...$(WHITE)"
 
-$(NAME): run
-	@echo "$(GREEN)$(NAME) quined...$(WHITE)"
+$(NAME):
+	@echo "$(ASCIIART)"
+
+$(KID): run
+	@echo "$(GREEN)$(KID) created...$(WHITE)"
 	
 clean : 
-	$(RM) $(NAME)
+	$(RM) $(KID)
 	@echo "$(RED)clean done...$(WHITE)"
 
 fclean : clean
-	$(RM) $(NAME)
 	@echo "$(RED)fclean done...$(WHITE)"
 
 re : fclean all
 
-test: all
+test: $(SRC) $(KID)
 	@echo "$(CYAN)Testing $(NAME)...$(WHITE)"
-	diff $(SRC) $(NAME)
+	diff $(SRC) $(KID)
 
 commit:
 	git add $(SRC) Makefile

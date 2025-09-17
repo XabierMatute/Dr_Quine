@@ -6,7 +6,7 @@
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/16 13:51:28 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/16 14:36:03 by xmatute-         ###   ########.fr        #
+#    Updated: 2025/09/17 14:06:45 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ define ASCIIART
 endef
 export ASCIIART
 
-NAME := Sully_0.py
+NAME := Sully
 
 SRC :=	Sully.py
 
@@ -29,7 +29,7 @@ CYAN = \033[0;36m
 GREEN = \033[0;32m
 MAGENTA = \033[0;35m
 
-all : $(NAME)
+all : run
 
 run : $(SRC)
 	@echo "$(CYAN)Running $(NAME)...$(WHITE)"
@@ -37,7 +37,7 @@ run : $(SRC)
 	@echo "$(GREEN)$(NAME) executed...$(WHITE)"
 
 $(NAME): run
-	@echo "$(GREEN)$(NAME) quined...$(WHITE)"
+	@echo $(ASCIIART)
 	
 clean : 
 	$(RM) Sully_*.py
