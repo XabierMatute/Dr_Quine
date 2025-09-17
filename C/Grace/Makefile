@@ -6,7 +6,7 @@
 #    By: xmatute- <xmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/17 13:39:12 by xmatute-          #+#    #+#              #
-#    Updated: 2025/09/17 13:42:03 by xmatute-         ###   ########.fr        #
+#    Updated: 2025/09/17 14:07:41 by xmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ KID := Grace_kid.c
 
 CC := clang
 
-# CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 
 RM 		:= rm -rf
 
