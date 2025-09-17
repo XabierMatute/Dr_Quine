@@ -56,10 +56,26 @@ dkms.conf
 
 # outputs
 # Colleen
+output
 # Grace
+Grace_kid.*
 # Sully
+Sully_*
+Sully_*.*
 
 # Python bytecode
 __pycache__/
 *.py[cod]
 *$py.class
+
+# vstudio
+.vs/
+*.vcxproj*
+*.sln
+*.user
+*.opensdf
+*.sdf
+*.cache
+*.VC.db
+*.VC.VC.opendb
+.vscode/
