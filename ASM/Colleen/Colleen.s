@@ -2,45 +2,18 @@ section .text
     global main
     extern printf
 
-decapush:
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    push 10
-    ret
-
 print_code:
     push rbp
     mov rbp, rsp
-
-
     
-    mov rdi, s
-    mov rsi, 10
-    mov rdx, 10
-    mov rcx, 10
-    mov r8, 10
-    mov r9, 10
+    mov rdi, code
+    mov rsi, 34
+    mov rdx, code
+    mov rcx, 34
 
-    call decapush
-    ; push 14     ;1
-    ; push 20     ;1
     mov rax, 0      ; number of vector registers used
 
-    ; mov rax, 1      ; number of vector registers used
     call printf
-
-    add rsp, 16
-    add rsp, 16
-    add rsp, 16
-    add rsp, 16
-    add rsp, 16
 
     pop rbp
     ret
@@ -59,7 +32,4 @@ main:
     ret
 
 section .data
-    s db "section .text%c    global main%c    extern printf%c%cprint_code:%c    push rbp%c"
-;     s db "1%c2%c%c%c%c6%c"
-; section .data
-;     s db "test: %d %d %d %d %d (%d) %d %d %d", 10, 0
+   code db"section .text\n    global main\n    extern printf\n\nprint_code:%c    push rbp%c    mov rbp, rsp%c    %cmov rdi, code%c    mov rsi, 34%c    mov rdx, code%c    mov rcx, 34%c%c    mov rax, 0      ; number of vector registers used%c%c    call printf%c%c    pop rbp%c    ret%c%c; This program will print its own source when run.%c%cmain:%c    push rbp%c    mov rbp, rsp%c    %c; This function prints the source code%c    call print_code%c    %cmov rax, 0      ; return value%c    pop rbp%c    ret%c%csection .data% c   code db%c%s%c"
