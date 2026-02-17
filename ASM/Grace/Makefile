@@ -17,13 +17,19 @@ export ASCIIART
 
 NAME := Grace
 
-SRC :=	Grace.c
+SRC :=	Grace.s
 
-KID := Grace_kid.c
+OBJ := $(SRC:.s=.o)
 
-CC := clang
+KID := Grace_kid.s
 
-CFLAGS := -Wall -Wextra -Werror
+CC := gcc
+
+CFLAGS := -no-pie
+
+ASMC := nasm
+
+ASMFLAGS := -f elf64
 
 RM 		:= rm -rf
 
@@ -40,15 +46,21 @@ run : $(NAME)
 	./$(NAME)
 	@echo "$(GREEN)$(NAME) executed...$(WHITE)"
 
-$(NAME): $(SRC)
-	$(CC) $(CFLAGS) -o $(NAME) $(SRC)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled...$(WHITE)"
+
+$(OBJ): $(SRC)
+	$(ASMC) $(ASMFLAGS) $< -o $@
+	@echo "$(GREEN)$< assembled...$(WHITE)"
+
 
 $(KID): run
 	@echo "$(GREEN)$(KID) created...$(WHITE)"
-	
+
 clean : 
 	$(RM) $(KID)
+	$(RM) $(OBJ)
 	@echo "$(RED)clean done...$(WHITE)"
 
 fclean : clean
