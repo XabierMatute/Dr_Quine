@@ -1,29 +1,69 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+section .text
+    global main
+    extern printf
+    extern snprintf
+    extern dprintf
+    extern open
+    extern close
 
-// This program creates copies of itself with decremented counter
+main:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 64
 
-int main() {
-    int i = 5;
-    int x = i - 1;
-    char *source = "#include <stdio.h>%c#include <stdlib.h>%c#include <unistd.h>%c// This program creates copies of itself with decremented counter%c%cint main() {%cint i = %i;%cint x = i - 1;%cchar *source = %c%s%c;%c%c    if (i >= 0) {%c        char filename[32];%c        sprintf(filename, %cSully_%%d.c%c, x);%c        FILE *f = fopen(filename, %cw%c);%c        fprintf(f, source, 10,10,10,10,10,10,x,10,10,34,source,34,10,10,10,10,34,34,10,34,34,10,10,10,10,10,10,34,34,10,10,10,34,34,10,10,10,10,10,10,42,42,42,42,42,42,42,42,42,42,42,42,42);%c        fclose(f);%c%c        if (x >= 0) {%c            char compile_cmd[128];%c            sprintf(compile_cmd, %cclang -Wall -Wextra -Werror %%s -o Sully_%%d%c, filename, x);%c            system(compile_cmd);%c            char exec_cmd[32];%c            sprintf(exec_cmd, %c./Sully_%%d%c, x);%c            system(exec_cmd);%c        }%c    }%c    return 0;%c}%c";
+    mov rax, [rel i]
+    cmp rax, 0
+    jl .negative
+
+.positive:
+    mov rax, [rel i]
+    dec rax
+
+    lea rdi, [rsp]
+    mov rsi, 64
+    lea rdx, [rel fmt_filename]
+    mov rcx, rax
+    xor eax, eax
+    call snprintf
+
+    lea rdi, [rsp]
+    mov rsi, 0x241
+    mov rdx, 0644o
+    xor eax, eax
+    call open
+
+    mov [rel fd], rax
+
+    mov rdi, [rel fd]
+    lea rsi, [rel code]
+    mov rdx, [rel i]
+    mov rcx, 10
+    dec rdx
+    mov r8,  34
+    lea r9,  [rel code]
+    xor eax, eax
+    call dprintf
+
+    mov rdi, [rel fd]
+    call close
+
+    jmp .done
+
+.negative:
+    jmp .done
+
+
+.done:
+    xor eax, eax
+    add rsp, 64
+    pop rbp
+    ret
     
-    if (i >= 0) {
-        char filename[32];
-        sprintf(filename, "Sully_%d.c", x);
-        FILE *f = fopen(filename, "w");
-        fprintf(f, source, 10,10,10,10,10,10,x,10,10,34,source,34,10,10,10,10,34,34,10,34,34,10,10,10,10,10,10,34,34,10,10,10,34,34,10,10,10,10,10,10,42,42,42,42,42,42,42,42,42,42,42,42,42);
-        fclose(f);
-        
-        if (x >= 0) {
-            char compile_cmd[128];
-            sprintf(compile_cmd, "clang -Wall -Wextra -Werror %s -o Sully_%d", filename, x);
-            system(compile_cmd);
-            char exec_cmd[32];
-            sprintf(exec_cmd, "./Sully_%d", x);
-            system(exec_cmd);
-        }
-    }
-    return 0;
-}
+
+section .data
+    fd:           dq 0
+
+section .rodata
+    i:            dq 5
+    code: db "section .text%2$c    global main%2$c    extern printf%2$c    extern snprintf%2$c    extern dprintf%2$c    extern open%2$c    extern close%2$c%2$cmain:%2$c    push rbp%2$c    mov rbp, rsp%2$c    sub rsp, 64%2$c%2$c    mov rax, [rel i]%2$c    cmp rax, 0%2$c    jl .negative%2$c%2$c.positive:%2$c    mov rax, [rel i]%2$c    dec rax%2$c%2$c    lea rdi, [rsp]%2$c    mov rsi, 64%2$c    lea rdx, [rel fmt_filename]%2$c    mov rcx, rax%2$c    xor eax, eax%2$c    call snprintf%2$c%2$c    lea rdi, [rsp]%2$c    mov rsi, 0x241%2$c    mov rdx, 0644o%2$c    xor eax, eax%2$c    call open%2$c%2$c    mov [rel fd], rax%2$c%2$c    mov rdi, [rel fd]%2$c    lea rsi, [rel code]%2$c    mov rdx, [rel i]%2$c    mov rcx, 10%2$c    dec rdx%2$c    mov r8,  34%2$c    lea r9,  [rel code]%2$c    xor eax, eax%2$c    call dprintf%2$c%2$c    mov rdi, [rel fd]%2$c    call close%2$c%2$c    jmp .done%2$c%2$c.negative:%2$c    jmp .done%2$c%2$c%2$c.done:%2$c    xor eax, eax%2$c    add rsp, 64%2$c    pop rbp%2$c    ret%2$c    %2$c%2$csection .data%2$c    fd:           dq 0%2$c%2$csection .rodata%2$c    i:            dq %1$d%2$c    code: db %3$c%4$s%3$c, 0%2$c    fmt_filename: db %3$cSully_%%i.s%3$c, 0", 0
+    fmt_filename: db "Sully_%i.s", 0
