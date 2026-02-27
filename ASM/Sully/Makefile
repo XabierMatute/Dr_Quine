@@ -43,6 +43,8 @@ $(OBJ): $(SRC)
 clean :
 	$(RM) $(OBJ)
 	$(RM) $(OUTPUT)
+	$(RM) Sully_*
+	$(RM) Sully_*.s
 	@echo "$(RED)clean done...$(WHITE)"
 
 fclean : clean
@@ -51,9 +53,10 @@ fclean : clean
 
 re : fclean all
 
-test: $(SRC) $(OUTPUT)
+test: $(SRC) run
 	@echo "$(CYAN)Testing $(NAME)...$(WHITE)"
 	diff $(SRC) Sully_4.s
+
 
 commit:
 	git add $(SRC) Makefile
