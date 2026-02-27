@@ -49,6 +49,7 @@ $(KID): run
 	
 clean : 
 	$(RM) $(KID)
+	$(RM) $(OBJ)
 	@echo "$(RED)clean done...$(WHITE)"
 
 fclean : clean
